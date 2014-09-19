@@ -21,24 +21,17 @@ from mezzanine.generic.models import Rating
 from mezzanine.generic.fields import RatingField, CommentsField
 
 
-class Link(Displayable, Ownable):
+class Link(Displayable, Ownable, RichText):
 
-    link = models.URLField(null=True,
-        blank=(not getattr(settings, "LINK_REQUIRED", False)))
     rating = RatingField()
     comments = CommentsField()
 
     def get_absolute_url(self):
         return reverse("link_detail", kwargs={"slug": self.slug})
 
-    @property
-    def domain(self):
-        return urlparse(self.url).netloc
-
+    
     @property
     def url(self):
-        if self.link:
-            return self.link
         return current_request().build_absolute_uri(self.get_absolute_url())
 
 

@@ -114,7 +114,7 @@ class LinkCreate(CreateView):
         hours = getattr(settings, "ALLOWED_DUPLICATE_LINK_HOURS", None)
         if hours and form.instance.link:
             lookup = {
-                "link": form.instance.link,
+               
                 "publish_date__gt": now() - timedelta(hours=hours),
             }
             try:
